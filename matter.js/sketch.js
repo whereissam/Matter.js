@@ -23,21 +23,28 @@ function setup() {
   
 }
  
-function mousePressed(){ // move
+function mouseDragged(){ // move
   circles.push(new Circle(mouseX, mouseY , random(10,20)))
 }
 
 function draw() {
   background(51);
   Engine.update(engine); 
-  // update speed so that will not out of control (the boundaty part)
+  // update speed so that will not out of control (the boundary part)
+  
 //   for(var i = 0; i<boxes.length; i++){
 //     boxes[i].show()
 //   }
   for(var i = 0; i<circles.length; i++){
-    circles[i].show()
+    circles[i].show();
+    if(circles[i].isOffScreen()){
+        circles[i].removeFromWorld();
+        circles.splice(i,1);
+        i--
+    }
   }
   for(var i = 0; i<boundaries.length; i++){
     boundaries[i].show()
   }
+  console.log(circles.length, world.bodies.length)
 }
